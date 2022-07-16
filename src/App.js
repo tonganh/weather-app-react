@@ -5,11 +5,13 @@ import {
   Route,
   Routes
 } from "react-router-dom";
+import WeatherForestcast from './components/WeatherForestcast';
 function App() {
   return (
     <Router>
       <Routes>
         <Route path='/' element={<HomePage />}></Route>
+        <Route path='/weather-foresetcast' element={<WeatherForestcast />}></Route>
       </Routes>
     </Router>
   );

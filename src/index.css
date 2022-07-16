@@ -53,6 +53,8 @@ h1 {
 
 .app .logout-btn{
   font-size: 30px;
+  border: none;
+  background: none;
 }
 
 .logout-btn:hover{
