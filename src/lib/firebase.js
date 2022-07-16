@@ -59,30 +59,41 @@ export const uiConfig = {
   ],
 }
 
+export const rolesEnum = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+}
+
+const collectionUsing = "user-weather-app"
+
 export const storeUserInfo = async (user) => {
   const { uid } = user;
-  const userDoc = await db.collection("users").doc(uid).get();
+  const userDoc = await db.collection(collectionUsing).doc(uid).get();
   if (!userDoc.exists) {
-    await db.collection("users").doc(uid).set({ name: user.displayName });
+    await db.collection(collectionUsing).doc(uid).set({ name: user.displayName, location: '', role: rolesEnum.USER, email: user.email });
     return {
       name: user.displayName,
       id: uid,
-      location: user.location ? '' : user.location
+      location: user.location ? user.location : '',
+      role: rolesEnum.USER,
+      email: user.email
     };
   } else {
     return {
       id: uid,
       ...userDoc.data(),
-      location: ''
+      location: '',
+      role: rolesEnum.USER,
+      email: user.email
     };
   }
 }
 
 export const updateUser = async (user, image) => {
   try {
-    const userDoc = await firebase.firestore().collection("users").doc(user.id).get();
+    const userDoc = await firebase.firestore().collection(collectionUsing).doc(user.id).get();
     if (userDoc.exists) {
-      await firebase.firestore().collection("users").doc(user.id).update({ ...userDoc.data(), image: image });
+      await firebase.firestore().collection(collectionUsing).doc(user.id).update({ ...userDoc.data(), image: image });
     }
   } catch (err) {
     console.log(err);

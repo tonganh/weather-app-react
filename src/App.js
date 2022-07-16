@@ -48,7 +48,7 @@ function App() {
         <HeaderContent />
       </header >
       <div>
-        {user && <WeatherForestcast />}
+        {user && <WeatherForestcast userData={user} />}
       </div>
     </div >
   )
