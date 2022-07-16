@@ -7,6 +7,7 @@ import firebaseConfig from '../settings/firebase-config.json'
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
+const collectionUsing = "user-weather-app"
 export const auth = firebase.auth();
 export default firebase;
 
@@ -14,6 +15,21 @@ export const getFirebaseItems = async () => {
   try {
     const snapshot = await db
       .collection("todos")
+      .get();
+    const items = snapshot.docs.map(
+      (doc) => ({ ...doc.data(), id: doc.id })
+    );
+    return items;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+}
+
+export const getFirebaseListUsers = async () => {
+  try {
+    const snapshot = await db
+      .collection(collectionUsing)
       .get();
     const items = snapshot.docs.map(
       (doc) => ({ ...doc.data(), id: doc.id })
@@ -64,7 +80,6 @@ export const rolesEnum = {
   ADMIN: 'ADMIN'
 }
 
-const collectionUsing = "user-weather-app"
 
 export const storeUserInfo = async (user) => {
   const { uid } = user;

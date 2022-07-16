@@ -1,79 +1,58 @@
 import React from 'react';
 import { Space, Table, Tag } from 'antd';
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <a href='/'>{text}</a>,
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
+import { rolesEnum } from '../lib/firebase'
 
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
+const UserDataTable = ({ data }) => {
 
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (_, record) => (
-            <Space size="middle">
-                <a>Invite {record.name}</a>
-                <a>Delete</a>
-            </Space>
-        ),
-    },
-];
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
-];
+    const columns = [
+        {
+            title: '名前',
+            dataIndex: 'name',
+            key: 'name',
+            align: 'center'
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+            align: 'center'
+        },
+        {
+            title: '町',
+            dataIndex: 'location',
+            key: 'location',
+            align: 'center'
+        },
+        {
+            title: '役割',
+            key: 'role',
+            dataIndex: 'role',
+            align: 'center',
+            render: (_, { role }) => {
+                let color = role === rolesEnum.ADMIN ? 'geekblue' : 'green';
+                return (
+                    <Tag color={color} >
+                        {role}
+                    </Tag>
+                );
+            }
+        },
+        {
+            title: '行動',
+            key: 'action',
+            align: 'center',
+            render: (_, record) => (
+                <Space size="middle">
+                    <a>Invite {record.name}</a>
+                    <a>Delete</a>
+                </Space>
+            ),
+        },
+    ];
 
-const UserDataTable = () => <Table columns={columns} dataSource={data} />;
+    return (
+        <Table columns={columns} dataSource={data} />
+    )
+}
 
 export default UserDataTable;
