@@ -46,6 +46,19 @@ h1 {
   padding: 1rem;
 }
 
+.app .logout-1st{
+  position: absolute;
+  right: 10vh;
+}
+
+.app .logout-btn{
+  font-size: 30px;
+}
+
+.logout-btn:hover{
+  cursor: pointer;
+}
+
 .app input {
   padding: .7rem 1.5rem;
   font-size: 1.2rem;
@@ -99,9 +112,14 @@ h1 {
 }
 
 
+.login .login-1st{
+  display: flex;
+  justify-content: center;
+}
 
-
-
+.login-1st .login-2st{
+  text-align: center;
+}
 
 
 
