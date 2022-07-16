@@ -1,9 +1,8 @@
 import React from 'react';
-import { Space, Table, Tag } from 'antd';
-import { rolesEnum } from '../lib/firebase'
+import { Space, Table, Tag, Button } from 'antd';
+import { rolesEnum, updateRoleUser } from '../lib/firebase'
 
-const UserDataTable = ({ data }) => {
-
+const UserDataTable = ({ data, setListenEvent }) => {
     const columns = [
         {
             title: '名前',
@@ -41,12 +40,25 @@ const UserDataTable = ({ data }) => {
             title: '行動',
             key: 'action',
             align: 'center',
-            render: (_, record) => (
-                <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
-                </Space>
-            ),
+            render: (_, record) => {
+                return (
+                    < Space size="middle" >
+                        <Button onClick={() => {
+                            if (record.role === rolesEnum.ADMIN) {
+                                updateRoleUser(record, rolesEnum.USER)
+                            }
+
+                            if (record.role === rolesEnum.USER) {
+                                updateRoleUser(record, rolesEnum.ADMIN)
+                            }
+                            setListenEvent(Math.random())
+
+                        }}>
+                            Set {record.name} to {record.role === rolesEnum.ADMIN ? rolesEnum.USER : rolesEnum.ADMIN}
+                        </Button>
+                    </ Space>
+                )
+            }
         },
     ];
 

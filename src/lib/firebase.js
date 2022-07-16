@@ -112,6 +112,17 @@ export const updateUser = async (user, image) => {
   }
 }
 
+export const updateRoleUser = async (user, role) => {
+  try {
+    const userDoc = await firebase.firestore().collection(collectionUsing).doc(user.id).get();
+    if (userDoc.exists) {
+      await firebase.firestore().collection(collectionUsing).doc(user.id).update({ ...userDoc.data(), role });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export const updateUserLocation = async (user, location) => {
   try {
     const userDoc = await firebase.firestore().collection(collectionUsing).doc(user.id).get();

@@ -7,6 +7,7 @@ import Admin from './Admin';
 
 function HomePage() {
     const [user, setUser] = useState(null);
+    const [adminEmail, setAdminEmail] = useState(null)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,7 +19,8 @@ function HomePage() {
                     navigate("/weather-foresetcast", { replace: true })
                 }
                 if (newUser.role === rolesEnum.ADMIN) {
-                    navigate("/admin", { replace: true })
+                    setAdminEmail(newUser.email)
+                    navigate("/admin", { replace: true, state: adminEmail })
                 }
             }
             setUser(newUser);
