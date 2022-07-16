@@ -3,7 +3,6 @@ import axios from 'axios'
 import { auth } from '../lib/firebase'
 
 function WeatherForestcast({ userData }) {
-    console.log("🚀 ~ file: WeatherForestcast.js ~ line 6 ~ WeatherForestcast ~ userData", userData)
     const [location, setLocation] = useState('hanoi')
     const [data, setData] = useState({})
 
