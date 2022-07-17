@@ -7,6 +7,7 @@ import firebaseConfig from '../settings/firebase-config.json'
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
+const collectionUsing = "user-weather-app"
 export const auth = firebase.auth();
 export default firebase;
 
@@ -14,6 +15,21 @@ export const getFirebaseItems = async () => {
   try {
     const snapshot = await db
       .collection("todos")
+      .get();
+    const items = snapshot.docs.map(
+      (doc) => ({ ...doc.data(), id: doc.id })
+    );
+    return items;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+}
+
+export const getFirebaseListUsers = async () => {
+  try {
+    const snapshot = await db
+      .collection(collectionUsing)
       .get();
     const items = snapshot.docs.map(
       (doc) => ({ ...doc.data(), id: doc.id })
@@ -64,7 +80,6 @@ export const rolesEnum = {
   ADMIN: 'ADMIN'
 }
 
-const collectionUsing = "user-weather-app"
 
 export const storeUserInfo = async (user) => {
   const { uid } = user;
@@ -91,6 +106,17 @@ export const updateUser = async (user, image) => {
     const userDoc = await firebase.firestore().collection(collectionUsing).doc(user.id).get();
     if (userDoc.exists) {
       await firebase.firestore().collection(collectionUsing).doc(user.id).update({ ...userDoc.data(), image: image });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const updateRoleUser = async (user, role) => {
+  try {
+    const userDoc = await firebase.firestore().collection(collectionUsing).doc(user.id).get();
+    if (userDoc.exists) {
+      await firebase.firestore().collection(collectionUsing).doc(user.id).update({ ...userDoc.data(), role });
     }
   } catch (err) {
     console.log(err);

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import SelectDefaultLocation from './SelectDefaultLocation'
 
 
+
 function WeatherForestcast() {
     const navigate = useNavigate();
     const [location, setLocation] = useState('hanoi')

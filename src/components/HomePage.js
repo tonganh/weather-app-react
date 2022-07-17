@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { auth, storeUserInfo } from '../lib/firebase'
+import { auth, rolesEnum, storeUserInfo } from '../lib/firebase'
 import Login from './Login'
 import { useNavigate } from 'react-router-dom'
 import WeatherForestcast from './WeatherForestcast';
+import Admin from './Admin';
 
 function HomePage() {
     const [user, setUser] = useState(null);
+    const [adminEmail, setAdminEmail] = useState(null)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -13,16 +15,26 @@ function HomePage() {
             let newUser = null;
             if (user) {
                 newUser = await storeUserInfo(user);
-                navigate("/weather-foresetcast", { replace: true })
+                if (newUser.role === rolesEnum.USER) {
+                    navigate("/weather-foresetcast", { replace: true })
+                }
+                if (newUser.role === rolesEnum.ADMIN) {
+                    setAdminEmail(newUser.email)
+                    navigate("/admin", { replace: true, state: adminEmail })
+                }
             }
             setUser(newUser);
         });
     }, []);
 
     const HeaderContent = () => {
-        if (user) {
+        if (user && user.role === rolesEnum.USER) {
             return (
                 <WeatherForestcast />
+            )
+        } else if (user && user.role === rolesEnum.ADMIN) {
+            return (
+                <Admin />
             )
         } else {
             return (<Login />)
