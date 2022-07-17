@@ -151,5 +151,11 @@ h1 {
   text-align: center;
 }
 
+.temp{
+  display: flex;
+}
 
-
+.description-up{
+  float: right;
+  transform: rotate(269deg);
+}
