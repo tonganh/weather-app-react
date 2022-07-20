@@ -93,7 +93,7 @@ function WeatherForestcast() {
             }
 
             if (main === 'Clouds') {
-                if (currentData.main.humidity < 80) {
+                if (dataUsing.main.humidity < 80) {
                     currentData.push(<p>Trời nhiều mây không ảnh hưởng tới giao thông</p>)
                 } else {
                     currentData.push(<p>Trời nhiều mây, độ ẩm cao, có khả năng có mưa. Mang ô, áo mưa,...đề phòng</p>)

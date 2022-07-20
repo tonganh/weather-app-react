@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+  web:
+    image: "git.hisoft.com.vn:5050/anhtn/itss-final-weather-app"
+    build:
+      context: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dgsn-http.entrypoints=web"
+      - "traefik.http.routers.dgsn-http.rule=Host(`itss-final-project.2soft.top`)"
+      - "traefik.http.routers.dgsn-http.middlewares=https_redirect"
+      - "traefik.http.routers.dgsn.entrypoints=websecure"
+      - "traefik.http.routers.dgsn.rule=Host(`itss-final-project.2soft.top`)"
+      - "traefik.http.routers.dgsn.tls=true"
+      - "traefik.http.routers.dgsn.tls.certresolver=acmeresolver"
+      - “com.centurylinklabs.watchtower.enable=true”
